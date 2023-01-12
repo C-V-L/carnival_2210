@@ -1,29 +1,33 @@
 class Carnival
+	attr_reader :duration, :rides
 
-  def initialize
-    @all_rides = []
-  end
+	def initialize(duration)
+		@duration = duration
+		@rides = []
+	end
 
-  def add_ride(ride)
-    @all_rides << ride
-    # require 'pry'; binding.pry
-  end
+	def add_ride(ride)
+		rides << ride
+	end
 
-  def total_rev_from_all_rides
-    total = 0
-    @all_rides.each do |rides|
-      # require 'pry'; binding.pry
-      total += rides.total_revenue
-    end
-    total
-  end
+	def most_popular_ride
+		highest_ridden = rides_per_ride.values.max
+		rides_per_ride.key(highest_ridden)
+	end
 
-  def most_popular_ride
-    number = 0
-    @all_rides.each do |ride|
-      require 'pry'; binding.pry
-      number += ride.rider_log.count
-    end
-    number
-  end
+	def rides_per_ride
+		amount_of_rides = {}
+		rides.each do |ride|
+			amount_of_rides[ride] = ride.rider_log.values.sum
+		end
+		amount_of_rides
+	end
+
+	def most_profitable_ride
+		rides.max_by(&:total_revenue)
+	end
+
+	def total_revenue
+		rides.sum {|ride| ride.total_revenue}
+	end
 end

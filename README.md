@@ -191,3 +191,4 @@ Additionally, use TDD to add the following functionality to the `Carnival` class
    * List of visitors and each visitor's favorite ride and how much total money a visitor spent
    * List of rides and who rode each ride and the ride's total revenue
 3. The Carnival class can calculate the total revenue of all carnivals.
+# night_writer
