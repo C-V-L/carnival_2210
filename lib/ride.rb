@@ -1,45 +1,34 @@
-class Ride
-  attr_reader :name,
-              :min_height,
-              :admission_fee,
-              :excitement,
-              :total_revenue,
-              :rider_log
-              
-
+class Ride 
+          attr_reader :name, 
+                      :min_height, 
+                      :admission_fee, 
+                      :excitement, 
+                      :total_revenue, 
+                      :riders
   def initialize(info)
     @name = info[:name]
     @min_height = info[:min_height]
     @admission_fee = info[:admission_fee]
     @excitement = info[:excitement]
-    @total_revenue = 0
-    @rider_log = Hash.new
+    @total_revenue = 0 
+    @riders = []
+    
+
   end
 
-  def board_rider(visitor)
-    if visitor.tall_enough?(min_height) && visitor.preference_check(@excitement)
-      if @rider_log[visitor] == nil
-      @rider_log[visitor] = 1
-      else visitor.name == visitor.name
-      @rider_log[visitor] += 1
-      end
-      @total_revenue += @admission_fee
-      visitor.spend(@admission_fee)
-    else
-      false
+  def board_rider(rider)
+    if rider.tall_enough?(min_height) && rider.preferences.include?(excitement)
+      @riders << rider 
+      rider.spending_money = rider.spending_money - admission_fee
+      @total_revenue += admission_fee
+    end 
+  end
+
+  def rider_log
+    log = Hash.new(0)
+    @riders.each do |rider|
+      log[rider] += 1
     end
+    log
   end
-
-  # def board_rider(visitor)
-  #   if visitor.name == visitor.name
-  #     @rider_log[visitor] += 1
-  #   else
-  #     @rider_log[visitor] = 1
-  #   end
-  #     @rider_log
-  # end
- #says that everything is passing even the unfinsihed method... sus
-
-
- 
 end

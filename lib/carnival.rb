@@ -1,29 +1,33 @@
 class Carnival
+            attr_reader :rides
+  def initialize(time)
+    @time = time 
+    @rides = []
+  end
 
-  def initialize
-    @all_rides = []
+  def duration 
+    "#{@time} days"
   end
 
   def add_ride(ride)
-    @all_rides << ride
-    # require 'pry'; binding.pry
-  end
-
-  def total_rev_from_all_rides
-    total = 0
-    @all_rides.each do |rides|
-      # require 'pry'; binding.pry
-      total += rides.total_revenue
-    end
-    total
+    @rides << ride
   end
 
   def most_popular_ride
-    number = 0
-    @all_rides.each do |ride|
-      require 'pry'; binding.pry
-      number += ride.rider_log.count
-    end
-    number
+    @rides.sort_by {|ride| ride.riders.count}.reverse.first
   end
+
+  def most_profitable_ride 
+    @rides.sort_by {|ride| ride.total_revenue}.reverse.first
+  end
+
+  def total_revenue_all_rides
+    total = 0 
+    @rides.each do |ride|
+      total += ride.total_revenue
+    end
+    total 
+  end
+
+
 end
